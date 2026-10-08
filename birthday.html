@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>生日快乐贺卡</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background: #fff8ee;
+  font-family: "Microsoft Yahei", sans-serif;
+}
+
+/* 橘子波浪帷幕 */
+.curtain-wrap {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.curtain-left,
+.curtain-right {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, #ffb366, #ffcc80);
+  transition: transform 2.8s ease-in-out;
+}
+
+.curtain-left {
+  left: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 85%, 3% 80%, 0 75%, 4% 70%, 0 65%, 5% 60%, 0 55%, 6% 50%, 0 45%, 7% 40%, 0 35%, 8% 30%, 0 25%, 9% 20%, 0 15%, 10% 10%, 0 0);
+}
+
+.curtain-right {
+  right: 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 100% 85%, 97% 80%, 100% 75%, 96% 70%, 100% 65%, 95% 60%, 100% 55%, 94% 50%, 100% 45%, 93% 40%, 100% 35%, 92% 30%, 100% 25%, 91% 20%, 100% 15%, 90% 10%, 100% 0);
+}
+
+.curtain-open .curtain-left {
+  transform: translateX(-100%);
+}
+
+.curtain-open .curtain-right {
+  transform: translateX(100%);
+}
+
+/* 星光剪影 */
+.star-silhouette {
+  position: absolute;
+  top: 12%;
+  right: 10%;
+  width: 180px;
+  height: 220px;
+  opacity: 0.25;
+  background: radial-gradient(circle, #ffdd77 0%, transparent 70%);
+  clip-path: polygon(50% 0%, 62% 18%, 78% 22%, 66% 38%, 70% 58%, 50% 72%, 30% 58%, 34% 38%, 22% 22%, 38% 18%);
+}
+
+.star {
+  position: absolute;
+  background: #ffe699;
+  border-radius: 50%;
+  animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+
+/* 祝福卡片 */
+.card-wrap {
+  position: absolute;
+  width: 90%;
+  max-width: 620px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px #ffddbb;
+  transition: transform 1.8s ease-out;
+  z-index: 4;
+}
+
+.card-show {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+h1 {
+  color: #cc7733;
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: clamp(22px, 5vw, 32px);
+}
+
+.greet {
+  text-align: center;
+  color: #664422;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.daily {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  color: #775533;
+  font-size: 14px;
+}
+
+/* 罗小黑：使用抠图素材 */
+.luoXiaohei {
+  position: absolute;
+  top: 48%;
+  left: -240px;
+  width: 220px;
+  height: auto;
+  z-index: 6;
+  transform: translateY(-50%);
+}
+
+.luoXiaohei img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+  animation: xiaoheiBob 0.45s ease-in-out infinite alternate;
+}
+
+/* 身体轻微弹跳 */
+@keyframes xiaoheiBob {
+  from {
+    transform: translateY(0) rotate(-2deg);
+  }
+  to {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+/* 祝福气泡 */
+.banner-text {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #442200;
+  font-weight: bold;
+  font-size: 14px;
+  white-space: nowrap;
+  background: rgba(255, 248, 230, 0.92);
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(255, 180, 120, 0.45);
+}
+</style>
+</head>
+
+<body>
+  <!-- 帷幕 -->
+  <div class="curtain-wrap">
+    <div class="curtain-left"></div>
+    <div class="curtain-right"></div>
+  </div>
+
+  <!-- 星光剪影 -->
+  <div class="star-silhouette"></div>
+
+  <!-- 罗小黑素材 -->
+  <div class="luoXiaohei" id="luoXiaohei">
+    <img src="luoxiaohei_cutout.png" alt="罗小黑" />
+    <div class="banner-text">带着橘子，送来生日祝福✨</div>
+  </div>
+
+  <!-- 祝福卡片 -->
+  <div class="card-wrap">
+    <h1>谢安琪生日快乐！</h1>
+    <p class="greet">愿你永远眼里有星光，自在欢喜</p>
+    <ul class="daily">
+      <li>愿所有美好，如约而至</li>
+      <li>保持热爱，奔赴下一场山海</li>
+      <li>日子温柔，万事顺心</li>
+      <li>永远拥有闪闪发光的勇气</li>
+      <li>每一日都收获小惊喜</li>
+      <li>平安喜乐，岁岁无忧</li>
+    </ul>
+  </div>
+
+<script>
+  // 生成星光粒子
+  const body = document.body;
+  for (let i = 0; i < 30; i++) {
+    const s = document.createElement("div");
+    s.className = "star";
+    s.style.width = Math.random() * 3 + 1 + "px";
+    s.style.height = s.style.width;
+    s.style.left = Math.random() * 100 + "vw";
+    s.style.top = Math.random() * 100 + "vh";
+    s.style.animationDelay = Math.random() * 2 + "s";
+    body.appendChild(s);
+  }
+
+  const TOTAL = 17000;
+  const curtainWrap = document.querySelector('.curtain-wrap');
+  const xiaohei = document.getElementById('luoXiaohei');
+  const card = document.querySelector('.card-wrap');
+
+  function runAnimation() {
+    curtainWrap.classList.remove('curtain-open');
+    card.classList.remove('card-show');
+    xiaohei.style.transition = "none";
+    xiaohei.style.left = "-240px";
+
+    setTimeout(() => {
+      curtainWrap.classList.add('curtain-open');
+    }, 300);
+
+    setTimeout(() => {
+      xiaohei.style.transition = "left 5s cubic-bezier(0.4, 0, 0.6, 1)";
+      xiaohei.style.left = "110vw";
+    }, 3200);
+
+    setTimeout(() => {
+      card.classList.add('card-show');
+    }, 9000);
+
+    setTimeout(runAnimation, TOTAL);
+  }
+
+  runAnimation();
+</script>
+</body>
+</html>
